@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeTable";
+}
+
+   
+    <link href="~/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/styles/kendo.default.min.css" rel="stylesheet" />
+    <script src="~/Scripts/js/jquery.min.js"></script>
+    <script src="~/Scripts/js/kendo.all.min.js"></script>
+
+<div id="example">
+    <div id="grid"></div>
+    <script>
+        $(document).ready(function () {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: function(options) {
+                            $.ajax({
+                                type: "GET",
+                                url: "Employee/GetEmployees",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: 'json',
+                                data: JSON.stringify({key: "value"}),
+                                success: function(data) {
+                                    options.success(data);
+                                }
+                            });}
+                    },
+                    pageSize: 10
+                },
+                height: 550,
+                groupable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [{
+                    field: "Fname",
+                    title: "First Name"
+                }, {
+                    field: "Lname",
+                    title: "Last Name"
+                }, {
+                    field: "Social",
+                    title: "SSN"
+                },
+                {
+                    field: "Role",
+                    title: "Position"
+                }, {
+                    field: "Age",
+                    title:"Age"
+                }]
+              /*  columns: [{
+                    field: "FirstName",
+                    title: "First Name"
+                }, {
+                    field: "LastName",
+                    title: "Last Name"
+                }, {
+                    field: "Ssn",
+                    title: "SSN"
+                },
+               {
+                   field: "Position",
+                   title: "Position"
+               }, {
+                   field: "DoB",
+                   title:"Age"
+               }]*/
+            });
+        });
+    </script>
+</div>
+
